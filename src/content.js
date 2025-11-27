@@ -1,12 +1,15 @@
-import { CameraIcon, CloseIcon, DownloadIcon } from "./utils/icons";
+import { CameraIcon, CloseIcon } from "./utils/icons";
 import { toPng } from "html-to-image";
+import {
+  ExportTweetButton,
+  RemoveStatusToggleButton,
+} from "./utils/uiElements";
 
 window.addEventListener("scroll", () => {
   embadeCameraIconInEveryTweet();
 });
 
 document.body.addEventListener("click", (e) => {
-  console.log(e.target);
   const isTweetCaptureBtn = e.target.closest(".tweet_capture_button_container");
   if (!isTweetCaptureBtn) return;
 
@@ -37,12 +40,10 @@ function renderModal(tweetElement) {
                 <div class="modal_content_body">
                     <div id="capture_tweet_display"></div>
                     <div class="controlls_continer">
-                        <div class="container_btn">
-                          <button id="tweet_export_btn">
-                            ${DownloadIcon()}
-                            <span> Export tweet </span>
-                          </button>
+                        <div class="container_btns">
+                        ${RemoveStatusToggleButton()}
                         </div>
+                        ${ExportTweetButton()}
                     </div>
                 </div>
             </div>
@@ -59,6 +60,11 @@ function renderModal(tweetElement) {
       modalMarkup.remove();
     });
 
+  // STATUS BAR ON TWEET (LIKE, SHAER DATA) TOGGLE
+  const statusBarToggleBtn = document.getElementById("status_bar_remove_btn");
+  statusBarToggleBtn.dataset.isStatusbarVisible = "true";
+  statusBarToggleBtn.addEventListener("click", toggleStatusBar);
+
   // EVENT LISTNER FOR THE EXPORT BTN
   document
     .getElementById("tweet_export_btn")
@@ -71,33 +77,6 @@ document.addEventListener("keydown", (e) => {
   const modal = document.getElementById("capture_tweet_display_modal");
   if (modal) modal.remove();
 });
-
-function embadeCameraIconInEveryTweet() {
-  Array.from(document.querySelectorAll("article")).forEach((tweetCard) => {
-    if (tweetCard.dataset.isCameraIconExist) return;
-
-    const iconBarSelector =
-      '[aria-label*="views"], [aria-label*="likes"], [aria-label*="replies"]';
-    const iconBar = tweetCard.querySelector(iconBarSelector);
-    const buttonContainer = document.createElement("div");
-    const button = document.createElement("button");
-    buttonContainer.appendChild(button);
-
-    button.innerHTML = CameraIcon();
-
-    // add custom classes to the button and the container
-    buttonContainer.classList.add("tweet_capture_button_container");
-    button.classList.add("tweet_capture_button");
-
-    if (iconBar) {
-      // append the conatainer to the icon bar
-      iconBar.appendChild(buttonContainer);
-
-      // last mark the tweet as the icon-already-embade
-      tweetCard.dataset.isCameraIconExist = "true";
-    }
-  });
-}
 
 function cleanupCaptureTweetElement(tweetElement) {
   tweetElement.id = "captured_tweet";
@@ -128,4 +107,52 @@ async function exportTweet() {
     console.log("Export fail");
     console.error(err);
   }
+}
+
+function toggleStatusBar() {
+  const tweetEl = document.getElementById("captured_tweet");
+  const toggleBtn = document.getElementById("status_bar_remove_btn");
+  const isStatusBarVisible = toggleBtn.dataset.isStatusbarVisible;
+  const iconBarSelector =
+    '[aria-label*="views"], [aria-label*="likes"], [aria-label*="replies"]';
+
+  if (isStatusBarVisible) {
+    toggleBtn.dataset.isStatusbarVisible = "";
+    tweetEl.querySelector(iconBarSelector).style.display = "none";
+    toggleBtn.classList.remove("btn_on");
+  } else {
+    toggleBtn.dataset.isStatusbarVisible = "true";
+    tweetEl.querySelector(iconBarSelector).style.display = "flex";
+    if (!toggleBtn.classList.contains("btn_on"))
+      toggleBtn.classList.add("btn_on");
+  }
+}
+
+// ADD A CAMERA ICON TO EVERY TWEET //
+
+function embadeCameraIconInEveryTweet() {
+  Array.from(document.querySelectorAll("article")).forEach((tweetCard) => {
+    if (tweetCard.dataset.isCameraIconExist) return;
+
+    const iconBarSelector =
+      '[aria-label*="views"], [aria-label*="likes"], [aria-label*="replies"]';
+    const iconBar = tweetCard.querySelector(iconBarSelector);
+    const buttonContainer = document.createElement("div");
+    const button = document.createElement("button");
+    buttonContainer.appendChild(button);
+
+    button.innerHTML = CameraIcon();
+
+    // add custom classes to the button and the container
+    buttonContainer.classList.add("tweet_capture_button_container");
+    button.classList.add("tweet_capture_button");
+
+    if (iconBar) {
+      // append the conatainer to the icon bar
+      iconBar.appendChild(buttonContainer);
+
+      // last mark the tweet as the icon-already-embade
+      tweetCard.dataset.isCameraIconExist = "true";
+    }
+  });
 }

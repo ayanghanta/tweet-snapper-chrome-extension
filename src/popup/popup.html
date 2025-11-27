@@ -9,6 +9,8 @@
         line-height: 1.6;
         display: grid;
         grid-template-columns: 5.8fr 4.2fr;
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
       }
 
       /* CAPTURE TWEET */
@@ -26,28 +28,42 @@
       }
       .container_btn {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: column;
+        margin-left: 24px;
+        gap: 12px;
       }
       .controll_svg_icon {
         width: 20px;
         height: 20px;
         fill: #fff;
       }
-      #tweet_export_btn {
+      .controll_svg_icon_toggle {
+        width: 42px;
+        height: 42px;
+        fill: #0077b6;
+        background: #fff;
+      }
+      .controll_btn {
         all: unset;
-        background-color: #0096c7;
-        padding: 8px 16px;
-        border-radius: 8px;
-        color: #fff;
         cursor: pointer;
         display: flex;
         align-items: center;
         gap: 12px;
         transition: all 0.3s;
       }
+      #tweet_export_btn {
+        background-color: #0096c7;
+        padding: 8px 16px;
+        border-radius: 8px;
+        color: #fff;
+      }
       #tweet_export_btn:hover {
         background-color: #0077b6;
+      }
+      .controll_title {
+        margin-top: 0;
+        margin-bottom: 6px;
+        font-size: 18px;
       }
     </style>
   </head>
@@ -57,18 +73,34 @@
       <div id="capture_tweet_display"></div>
       <div class="controlls_continer">
         <div class="container_btn">
-          <button id="tweet_export_btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="controll_svg_icon"
-              viewBox="0 0 256 256"
-            >
-              <path
-                d="M240,136v64a16,16,0,0,1-16,16H32a16,16,0,0,1-16-16V136a16,16,0,0,1,16-16H72a8,8,0,0,1,0,16H32v64H224V136H184a8,8,0,0,1,0-16h40A16,16,0,0,1,240,136Zm-117.66-2.34a8,8,0,0,0,11.32,0l48-48a8,8,0,0,0-11.32-11.32L136,108.69V24a8,8,0,0,0-16,0v84.69L85.66,74.34A8,8,0,0,0,74.34,85.66ZM200,168a12,12,0,1,0-12,12A12,12,0,0,0,200,168Z"
-              ></path>
-            </svg>
-            <span> Download tweet </span>
-          </button>
+          <div>
+            <button id="tweet_export_btn" class="controll_btn">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="controll_svg_icon"
+                viewBox="0 0 256 256"
+              >
+                <path
+                  d="M240,136v64a16,16,0,0,1-16,16H32a16,16,0,0,1-16-16V136a16,16,0,0,1,16-16H72a8,8,0,0,1,0,16H32v64H224V136H184a8,8,0,0,1,0-16h40A16,16,0,0,1,240,136Zm-117.66-2.34a8,8,0,0,0,11.32,0l48-48a8,8,0,0,0-11.32-11.32L136,108.69V24a8,8,0,0,0-16,0v84.69L85.66,74.34A8,8,0,0,0,74.34,85.66ZM200,168a12,12,0,1,0-12,12A12,12,0,0,0,200,168Z"
+                ></path>
+              </svg>
+              <span> Download tweet </span>
+            </button>
+          </div>
+          <div>
+            <p class="controll_title">Remove stats bar</p>
+            <button class="controll_btn">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="controll_svg_icon_toggle"
+                viewBox="0 0 256 256"
+              >
+                <path
+                  d="M176,56H80a72,72,0,0,0,0,144h96a72,72,0,0,0,0-144ZM80,168a40,40,0,1,1,40-40A40,40,0,0,1,80,168Z"
+                ></path>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
