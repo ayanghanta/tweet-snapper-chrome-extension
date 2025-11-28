@@ -2,6 +2,7 @@ import { CameraIcon, CloseIcon } from "./utils/icons";
 import { toPng } from "html-to-image";
 import {
   ExportTweetButton,
+  RangeControoler,
   RemoveStatusToggleButton,
 } from "./utils/uiElements";
 
@@ -42,6 +43,7 @@ function renderModal(tweetElement) {
                     <div class="controlls_continer">
                         <div class="container_btns">
                         ${RemoveStatusToggleButton()}
+                        ${RangeControoler()}
                         </div>
                         ${ExportTweetButton()}
                     </div>
@@ -64,6 +66,11 @@ function renderModal(tweetElement) {
   const statusBarToggleBtn = document.getElementById("status_bar_remove_btn");
   statusBarToggleBtn.dataset.isStatusbarVisible = "true";
   statusBarToggleBtn.addEventListener("click", toggleStatusBar);
+
+  // RANGE BUTTON
+  document
+    .getElementById("border_radious_controller_btn")
+    .addEventListener("input", controllBorderRadious);
 
   // EVENT LISTNER FOR THE EXPORT BTN
   document
@@ -114,7 +121,7 @@ function toggleStatusBar() {
   const toggleBtn = document.getElementById("status_bar_remove_btn");
   const isStatusBarVisible = toggleBtn.dataset.isStatusbarVisible;
   const iconBarSelector =
-    '[aria-label*="views"], [aria-label*="likes"], [aria-label*="replies"]';
+    '[aria-label*="view"], [aria-label*="like"], [aria-label*="replies"]';
 
   if (isStatusBarVisible) {
     toggleBtn.dataset.isStatusbarVisible = "";
@@ -128,6 +135,15 @@ function toggleStatusBar() {
   }
 }
 
+function controllBorderRadious() {
+  const radiousValue = document.getElementById(
+    "border_radious_controller_btn"
+  ).value;
+  document.getElementById(
+    "captured_tweet"
+  ).style.borderRadius = `${radiousValue}px`;
+}
+
 // ADD A CAMERA ICON TO EVERY TWEET //
 
 function embadeCameraIconInEveryTweet() {
@@ -135,7 +151,7 @@ function embadeCameraIconInEveryTweet() {
     if (tweetCard.dataset.isCameraIconExist) return;
 
     const iconBarSelector =
-      '[aria-label*="views"], [aria-label*="likes"], [aria-label*="replies"]';
+      '[aria-label*="view"], [aria-label*="like"], [aria-label*="replies"]';
     const iconBar = tweetCard.querySelector(iconBarSelector);
     const buttonContainer = document.createElement("div");
     const button = document.createElement("button");

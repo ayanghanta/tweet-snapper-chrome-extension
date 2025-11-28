@@ -113,7 +113,7 @@
 #captured_tweet {
   background-color: #fff;
   width: 580px;
-  border-radius: 8px;
+  border-radius: 0;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }
 
@@ -167,6 +167,12 @@
 }
 .btn_on .of_btn {
   display: none;
+}
+
+/* RNAGE COLROLLER */
+.range_controller {
+  width: 80%;
+  cursor: pointer;
 }
 
 /* EXPORT BUTTON */

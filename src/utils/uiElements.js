@@ -24,6 +24,21 @@ export function RemoveStatusToggleButton() {
     </div>`;
 }
 
+export function RangeControoler() {
+  return `
+    <div>
+      <p class="controll_title">Adjust border radius</p>
+      <input
+        type="range"
+        id="border_radious_controller_btn"
+        max="20"
+        min="0"
+        class="range_controller"
+        value="0"
+      />
+    </div>`;
+}
+
 export function ExportTweetButton() {
   return `
     <div class="export_container">
