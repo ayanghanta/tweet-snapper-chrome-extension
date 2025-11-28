@@ -92,10 +92,14 @@ function cleanupCaptureTweetElement(tweetElement) {
     .getElementsByClassName("tweet_capture_button_container")[0]
     .remove();
 
+  // SET THE BG COLOR
+  tweetElement.style.backgroundColor = document.body.style.backgroundColor;
+
   tweetElement.querySelector(`button[aria-label*='Grok actions']`)?.remove();
   tweetElement.querySelector(`button[aria-label='More']`)?.remove();
   tweetElement.querySelector(`button[aria-label*='Bookmark']`)?.remove();
   tweetElement.querySelector(`button[aria-label*='Share post']`)?.remove();
+  tweetElement.querySelector(`button[aria-label*='Subscribe']`)?.remove();
 
   return tweetElement;
 }
